@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Dashboard from "../screens/Dashboard";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 
@@ -14,6 +15,7 @@ export default function AppNavigation() {
     >
       <Screen name="Login" component={Login} />
       <Screen name="Register" component={Register} />
+      <Screen name="Dashboard" component={Dashboard} />
     </Navigator>
   );
 }
