@@ -28,8 +28,8 @@ export default function Login({ navigation }: LoginProps) {
             type="email"
             bg="gray.50"
             _focus={{
-              bg: "purple.50",
-              borderColor: "purple.400",
+              bg: "violet.50",
+              borderColor: "violet.400",
             }}
             fontSize={14}
             placeholder="Type your email"
@@ -42,15 +42,15 @@ export default function Login({ navigation }: LoginProps) {
             type="password"
             bg="gray.50"
             _focus={{
-              bg: "purple.50",
-              borderColor: "purple.400",
+              bg: "violet.50",
+              borderColor: "violet.400",
             }}
             fontSize={14}
             placeholder="Type your password"
           />
         </InputGroup>
 
-        <Button colorScheme="purple">
+        <Button colorScheme="violet">
           <Text fontSize={18} color="white">
             Login
           </Text>
@@ -60,11 +60,11 @@ export default function Login({ navigation }: LoginProps) {
 
         <Button
           variant="outline"
-          borderColor="purple.500"
+          borderColor="violet.600"
           w="full"
           onPress={() => navigation.navigate("Register")}
         >
-          <Text fontSize={18} color="purple.500">
+          <Text fontSize={18} color="violet.600">
             Register
           </Text>
         </Button>

@@ -28,8 +28,8 @@ export default function Register({ navigation }: RegisterProps) {
             type="text"
             bg="gray.50"
             _focus={{
-              bg: "purple.50",
-              borderColor: "purple.400",
+              bg: "violet.50",
+              borderColor: "violet.400",
             }}
             fontSize={14}
             placeholder="Type your name"
@@ -42,8 +42,8 @@ export default function Register({ navigation }: RegisterProps) {
             type="email"
             bg="gray.50"
             _focus={{
-              bg: "purple.50",
-              borderColor: "purple.400",
+              bg: "violet.50",
+              borderColor: "violet.400",
             }}
             fontSize={14}
             placeholder="Type your email"
@@ -56,15 +56,15 @@ export default function Register({ navigation }: RegisterProps) {
             type="password"
             bg="gray.50"
             _focus={{
-              bg: "purple.50",
-              borderColor: "purple.400",
+              bg: "violet.50",
+              borderColor: "violet.400",
             }}
             fontSize={14}
             placeholder="Type your password"
           />
         </InputGroup>
 
-        <Button colorScheme="purple">
+        <Button colorScheme="violet">
           <Text fontSize={18} color="white">
             Register
           </Text>
@@ -74,10 +74,10 @@ export default function Register({ navigation }: RegisterProps) {
 
         <Button
           variant="outline"
-          borderColor="purple.500"
+          borderColor="violet.600"
           onPress={() => navigation.navigate("Login")}
         >
-          <Text fontSize={18} color="purple.500">
+          <Text fontSize={18} color="violet.600">
             Login
           </Text>
         </Button>
