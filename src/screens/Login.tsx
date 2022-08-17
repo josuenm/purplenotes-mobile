@@ -9,6 +9,8 @@ import {
   Text,
 } from "native-base";
 import { Input } from "../components/Input";
+import { NormalButton, OutlineButton } from "../components/Buttons";
+import userApi from "../services/userApi";
 
 interface LoginProps {
   navigation: {
@@ -29,7 +31,9 @@ export default function Login({ navigation }: LoginProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInputs>();
-  const onSubmit = (data: IFormInputs) => console.log(data);
+  const onSubmit = (data: IFormInputs) => {
+    userApi.login(data);
+  };
 
   return (
     <Center flex={1} paddingX={5}>
@@ -82,24 +86,13 @@ export default function Login({ navigation }: LoginProps) {
           </FormControl.ErrorMessage>
         </FormControl>
 
-        <Button colorScheme="violet" onPress={handleSubmit(onSubmit)}>
-          <Text fontSize={18} color="white">
-            Login
-          </Text>
-        </Button>
+        <NormalButton onPress={handleSubmit(onSubmit)}>Login</NormalButton>
 
         <Divider my={2} />
 
-        <Button
-          variant="outline"
-          borderColor="violet.600"
-          w="full"
-          onPress={() => navigation.navigate("Register")}
-        >
-          <Text fontSize={18} color="violet.600">
-            Register
-          </Text>
-        </Button>
+        <OutlineButton onPress={() => navigation.navigate("Register")}>
+          Register
+        </OutlineButton>
       </Stack>
     </Center>
   );

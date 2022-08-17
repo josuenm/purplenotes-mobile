@@ -9,6 +9,8 @@ import {
   Stack,
   Text,
 } from "native-base";
+import { NormalButton, OutlineButton } from "../components/Buttons";
+import userApi from "../services/userApi";
 
 interface RegisterProps {
   navigation: {
@@ -30,7 +32,9 @@ export default function Register({ navigation }: RegisterProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInputs>();
-  const onSubmit = (data: IFormInputs) => console.log(data);
+  const onSubmit = (data: IFormInputs) => {
+    userApi.register(data);
+  };
 
   return (
     <Center flex={1} paddingX={5}>
@@ -106,23 +110,13 @@ export default function Register({ navigation }: RegisterProps) {
           </FormControl.ErrorMessage>
         </FormControl>
 
-        <Button colorScheme="violet">
-          <Text fontSize={18} color="white">
-            Register
-          </Text>
-        </Button>
+        <NormalButton onPress={handleSubmit(onSubmit)}>Register</NormalButton>
 
         <Divider my={2} />
 
-        <Button
-          variant="outline"
-          borderColor="violet.600"
-          onPress={() => navigation.navigate("Login")}
-        >
-          <Text fontSize={18} color="violet.600">
-            Login
-          </Text>
-        </Button>
+        <OutlineButton onPress={() => navigation.navigate("Login")}>
+          Login
+        </OutlineButton>
       </Stack>
     </Center>
   );
