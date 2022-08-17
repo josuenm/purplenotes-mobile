@@ -1,14 +1,14 @@
+import { Controller, useForm } from "react-hook-form";
 import {
   Button,
   Center,
   Divider,
+  FormControl,
   Image,
   Input,
-  InputGroup,
   Stack,
   Text,
 } from "native-base";
-import Label from "../components/Label";
 
 interface RegisterProps {
   navigation: {
@@ -16,54 +16,95 @@ interface RegisterProps {
   };
 }
 
+interface IFormInputs {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export default function Register({ navigation }: RegisterProps) {
   const logo = require("../../assets/logo.png");
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInputs>();
+  const onSubmit = (data: IFormInputs) => console.log(data);
 
   return (
     <Center flex={1} paddingX={5}>
       <Image source={logo} alt="Logo" size="md" w="full" mb={5} />
       <Stack w="full" space={5}>
-        <InputGroup flexDirection="column">
-          <Label>Name:</Label>
-          <Input
-            type="text"
-            bg="gray.50"
-            _focus={{
-              bg: "violet.50",
-              borderColor: "violet.400",
+        <FormControl isRequired isInvalid={"name" in errors}>
+          <FormControl.Label>Name:</FormControl.Label>
+          <Controller
+            control={control}
+            rules={{
+              required: "Field is required",
             }}
-            fontSize={14}
-            placeholder="Type your name"
+            name="name"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                type="text"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Type your name"
+              />
+            )}
           />
-        </InputGroup>
+          <FormControl.ErrorMessage>
+            {errors.name?.message}
+          </FormControl.ErrorMessage>
+        </FormControl>
 
-        <InputGroup flexDirection="column">
-          <Label>E-mail:</Label>
-          <Input
-            type="email"
-            bg="gray.50"
-            _focus={{
-              bg: "violet.50",
-              borderColor: "violet.400",
+        <FormControl isRequired isInvalid={"email" in errors}>
+          <FormControl.Label>Email:</FormControl.Label>
+          <Controller
+            control={control}
+            rules={{
+              required: "Field is required",
+              maxLength: { value: 5, message: "Invalid email" },
             }}
-            fontSize={14}
-            placeholder="Type your email"
+            name="email"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                type="text"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Type your email"
+              />
+            )}
           />
-        </InputGroup>
+          <FormControl.ErrorMessage>
+            {errors.email?.message}
+          </FormControl.ErrorMessage>
+        </FormControl>
 
-        <InputGroup flexDirection="column">
-          <Label>Password:</Label>
-          <Input
-            type="password"
-            bg="gray.50"
-            _focus={{
-              bg: "violet.50",
-              borderColor: "violet.400",
+        <FormControl isRequired isInvalid={"password" in errors}>
+          <FormControl.Label>Password:</FormControl.Label>
+          <Controller
+            control={control}
+            rules={{
+              required: "Field is required",
             }}
-            fontSize={14}
-            placeholder="Type your password"
+            name="password"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                type="text"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Type your password"
+              />
+            )}
           />
-        </InputGroup>
+          <FormControl.ErrorMessage>
+            {errors.password?.message}
+          </FormControl.ErrorMessage>
+        </FormControl>
 
         <Button colorScheme="violet">
           <Text fontSize={18} color="white">
