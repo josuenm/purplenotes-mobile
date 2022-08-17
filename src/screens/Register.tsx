@@ -8,6 +8,7 @@ import {
   Stack,
   Text,
 } from "native-base";
+import Label from "../components/Label";
 
 interface RegisterProps {
   navigation: {
@@ -23,7 +24,7 @@ export default function Register({ navigation }: RegisterProps) {
       <Image source={logo} alt="Logo" size="md" w="full" mb={5} />
       <Stack w="full" space={5}>
         <InputGroup flexDirection="column">
-          <Text fontSize={18}>Name:</Text>
+          <Label>Name:</Label>
           <Input
             type="text"
             bg="gray.50"
@@ -37,7 +38,7 @@ export default function Register({ navigation }: RegisterProps) {
         </InputGroup>
 
         <InputGroup flexDirection="column">
-          <Text fontSize={18}>E-mail:</Text>
+          <Label>E-mail:</Label>
           <Input
             type="email"
             bg="gray.50"
@@ -51,7 +52,7 @@ export default function Register({ navigation }: RegisterProps) {
         </InputGroup>
 
         <InputGroup flexDirection="column">
-          <Text fontSize={18}>Password:</Text>
+          <Label>Password:</Label>
           <Input
             type="password"
             bg="gray.50"
