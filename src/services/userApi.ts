@@ -1,21 +1,21 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.15.8:8080/users",
+  baseURL: "http://192.168.15.9:8080/users",
 });
 
 export default {
   login: async (data: { email: string; password: string }) => {
-    await api
+    return await api
       .post("/login", data)
-      .then((data) => console.log(data.data))
-      .catch((error) => console.log(error));
+      .then((response) => response)
+      .catch((error) => error.response);
   },
 
   register: async (data: { name: string; email: string; password: string }) => {
-    await api
+    return await api
       .post("/register", data)
-      .then((data) => console.log(data.data))
-      .catch((error) => console.log(error));
+      .then((response) => response)
+      .catch((error) => error.response);
   },
 };
