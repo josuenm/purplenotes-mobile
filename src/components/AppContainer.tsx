@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
+import { navigationRef } from "../utils/RootNavigation";
 import theme from "../utils/theme";
 
 interface AppContainerProps {
@@ -8,7 +9,7 @@ interface AppContainerProps {
 
 export default function AppContainer({ children }: AppContainerProps) {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <NativeBaseProvider theme={theme}>{children}</NativeBaseProvider>
     </NavigationContainer>
   );
