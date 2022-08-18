@@ -1,16 +1,9 @@
 import { useForm, Controller } from "react-hook-form";
-import {
-  Button,
-  Center,
-  Divider,
-  Image,
-  FormControl,
-  Stack,
-  Text,
-} from "native-base";
 import { Input } from "../components/Input";
 import { NormalButton, OutlineButton } from "../components/Buttons";
-import userApi from "../services/userApi";
+import { Center, Divider, Image, FormControl, Stack } from "native-base";
+import { UserContext, UserContextProps } from "../contexts/userContext";
+import { useContext } from "react";
 
 interface LoginProps {
   navigation: {
@@ -26,13 +19,15 @@ interface IFormInputs {
 export default function Login({ navigation }: LoginProps) {
   const logo = require("../../assets/logo.png");
 
+  const { Login } = useContext(UserContext) as UserContextProps;
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInputs>();
   const onSubmit = (data: IFormInputs) => {
-    userApi.login(data);
+    Login(data);
   };
 
   return (
