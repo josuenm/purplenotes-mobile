@@ -1,8 +1,9 @@
+import { StatusBar } from "native-base";
 import React from "react";
 import AppContainer from "./src/components/AppContainer";
 import AppNavigation from "./src/components/AppNavigation";
-import { StatusBar } from "native-base";
 import { GlobalToolsContextProvider } from "./src/contexts/globalToolsContext";
+import { NotesContextProvider } from "./src/contexts/notesContext";
 import { UserContextProvider } from "./src/contexts/userContext";
 
 export default function App() {
@@ -10,12 +11,14 @@ export default function App() {
     <AppContainer>
       <GlobalToolsContextProvider>
         <UserContextProvider>
-          <StatusBar
-            translucent
-            barStyle="dark-content"
-            backgroundColor="rgba(238, 238, 238, .6)"
-          />
-          <AppNavigation />
+          <NotesContextProvider>
+            <StatusBar
+              translucent
+              barStyle="dark-content"
+              backgroundColor="rgba(238, 238, 238, .6)"
+            />
+            <AppNavigation />
+          </NotesContextProvider>
         </UserContextProvider>
       </GlobalToolsContextProvider>
     </AppContainer>
