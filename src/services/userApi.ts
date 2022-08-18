@@ -1,7 +1,8 @@
 import axios from "axios";
+import Keys from "../utils/KeysFile";
 
 const api = axios.create({
-  baseURL: "http://192.168.15.9:8080/users",
+  baseURL: `${Keys.API_URL}/users`,
 });
 
 export default {
