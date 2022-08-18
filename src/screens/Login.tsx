@@ -1,9 +1,9 @@
-import { useForm, Controller } from "react-hook-form";
-import { Input } from "../components/Input";
-import { NormalButton, OutlineButton } from "../components/Buttons";
-import { Center, Divider, Image, FormControl, Stack } from "native-base";
-import { UserContext, UserContextProps } from "../contexts/userContext";
+import { Center, Divider, FormControl, Image, Stack } from "native-base";
 import { useContext } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { NormalButton, OutlineButton } from "../components/Buttons";
+import { Input } from "../components/Input";
+import { UserContext, UserContextProps } from "../contexts/userContext";
 
 interface LoginProps {
   navigation: {
@@ -27,7 +27,7 @@ export default function Login({ navigation }: LoginProps) {
     formState: { errors },
   } = useForm<IFormInputs>();
   const onSubmit = (data: IFormInputs) => {
-    Login(data);
+    Login({ email: data.email.replace(/\s/g, ""), password: data.password });
   };
 
   return (

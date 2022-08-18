@@ -1,14 +1,5 @@
+import { Center, Divider, FormControl, Image, Input, Stack } from "native-base";
 import { Controller, useForm } from "react-hook-form";
-import {
-  Button,
-  Center,
-  Divider,
-  FormControl,
-  Image,
-  Input,
-  Stack,
-  Text,
-} from "native-base";
 import { NormalButton, OutlineButton } from "../components/Buttons";
 import userApi from "../services/userApi";
 
@@ -33,7 +24,11 @@ export default function Register({ navigation }: RegisterProps) {
     formState: { errors },
   } = useForm<IFormInputs>();
   const onSubmit = (data: IFormInputs) => {
-    userApi.register(data);
+    userApi.register({
+      name: data.name,
+      email: data.email.replace(/\s/g, ""),
+      password: data.password,
+    });
   };
 
   return (
