@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createContext,
   useCallback,
@@ -6,8 +7,8 @@ import {
   useState,
 } from "react";
 import userApi from "../services/userApi";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as RootNavigation from ".././utils/RootNavigation";
+import HandleToken from "../utils/HandleToken";
+import * as RootNavigation from "../utils/RootNavigation";
 import {
   GlobalToolsContext,
   GlobalToolsContextProps,
@@ -44,8 +45,8 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
 
   async function Exit() {
     handleLoading(true);
-    await AsyncStorage.removeItem("@purplenotes:user");
-    await AsyncStorage.removeItem("@purplenotes:token");
+    AsyncStorage.removeItem("@purplenotes:user");
+    AsyncStorage.removeItem("@purplenotes:token");
     RootNavigation.navigate("Login");
     handleLoading(false);
   }
@@ -65,9 +66,10 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
 
     switch (response.status) {
       case 200:
-        AsyncStorage.setItem(
-          "@purplenotes:token",
-          JSON.stringify(response.data.token)
+        HandleToken.setItem(
+          "@purplenotes:user",
+          JSON.stringify(data),
+          60 * 60 * 24 * 30
         );
         handleUser({
           name: response.data.user.name,
@@ -111,9 +113,10 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
 
     switch (response.status) {
       case 201:
-        AsyncStorage.setItem(
-          "@purplenotes:token",
-          JSON.stringify(response.data.token)
+        HandleToken.setItem(
+          "@purplenotes:user",
+          JSON.stringify(data),
+          60 * 60 * 24 * 30
         );
         handleUser({
           name: response.data.user.name,
