@@ -1,6 +1,7 @@
 import { Center, Divider, FormControl, Image, Stack } from "native-base";
 import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { Keyboard } from "react-native";
 import { NormalButton, OutlineButton } from "../components/Buttons";
 import { Input } from "../components/Input";
 import { UserContext, UserContextProps } from "../contexts/userContext";
@@ -27,6 +28,7 @@ export default function Login({ navigation }: LoginProps) {
     formState: { errors },
   } = useForm<IFormInputs>();
   const onSubmit = (data: IFormInputs) => {
+    Keyboard.dismiss();
     Login({ email: data.email.replace(/\s/g, ""), password: data.password });
   };
 
