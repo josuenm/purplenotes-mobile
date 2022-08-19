@@ -1,7 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { NativeBaseProvider } from "native-base";
+import { GlobalToolsContextProvider } from "../contexts/globalToolsContext";
+import { NotesContextProvider } from "../contexts/notesContext";
+import { UserContextProvider } from "../contexts/userContext";
 import { navigationRef } from "../utils/RootNavigation";
-import theme from "../utils/theme";
 
 interface AppContainerProps {
   children: React.ReactNode;
@@ -10,7 +11,11 @@ interface AppContainerProps {
 export default function AppContainer({ children }: AppContainerProps) {
   return (
     <NavigationContainer ref={navigationRef}>
-      <NativeBaseProvider theme={theme}>{children}</NativeBaseProvider>
+      <GlobalToolsContextProvider>
+        <UserContextProvider>
+          <NotesContextProvider>{children}</NotesContextProvider>
+        </UserContextProvider>
+      </GlobalToolsContextProvider>
     </NavigationContainer>
   );
 }
