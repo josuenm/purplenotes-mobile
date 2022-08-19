@@ -1,28 +1,38 @@
-import { StatusBar } from "native-base";
+import {
+  Roboto_300Light,
+  Roboto_400Regular,
+  Roboto_500Medium,
+  Roboto_700Bold,
+  useFonts,
+} from "@expo-google-fonts/roboto";
+import AppLoading from "expo-app-loading";
+import { NativeBaseProvider, StatusBar } from "native-base";
 import React from "react";
 import AppContainer from "./src/components/AppContainer";
 import AppNavigation from "./src/components/AppNavigation";
-import BottomNavigation from "./src/components/BottomNavigation";
-import { GlobalToolsContextProvider } from "./src/contexts/globalToolsContext";
-import { NotesContextProvider } from "./src/contexts/notesContext";
-import { UserContextProvider } from "./src/contexts/userContext";
+import theme from "./src/utils/theme";
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Roboto_300Light,
+    Roboto_400Regular,
+    Roboto_500Medium,
+    Roboto_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
   return (
-    <AppContainer>
-      <GlobalToolsContextProvider>
-        <UserContextProvider>
-          <NotesContextProvider>
-            <StatusBar
-              translucent
-              barStyle="dark-content"
-              backgroundColor="rgba(238, 238, 238, .6)"
-            />
-            <AppNavigation />
-            <BottomNavigation />
-          </NotesContextProvider>
-        </UserContextProvider>
-      </GlobalToolsContextProvider>
-    </AppContainer>
+    <NativeBaseProvider theme={theme}>
+      <AppContainer>
+        <StatusBar
+          translucent
+          barStyle="dark-content"
+          backgroundColor="rgba(238, 238, 238, .6)"
+        />
+        <AppNavigation />
+      </AppContainer>
+    </NativeBaseProvider>
   );
 }
