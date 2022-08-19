@@ -1,21 +1,33 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import { Box, Button, FlatList, Heading, Link, Text } from "native-base";
 import { useContext } from "react";
 import { TouchableOpacity } from "react-native";
 import HeaderWithBackButton from "../components/HeaderWithBackButton";
 import { UserContext, UserContextProps } from "../contexts/userContext";
+import * as RootNavigation from "../utils/RootNavigation";
 
 interface FlatListData {
   title: string;
+  routeName: string;
 }
 
 export default function Settings() {
   const data = [
     {
-      title: "Account information",
+      title: "User information",
+      routeName: "AccountInformation",
+    },
+    {
+      title: "About App",
+      routeName: "AboutApp",
     },
   ];
 
   const { Exit } = useContext(UserContext) as UserContextProps;
+
+  function Navigate(route: string) {
+    RootNavigation.navigate(route);
+  }
 
   return (
     <>
@@ -32,15 +44,30 @@ export default function Settings() {
           mt={5}
           data={data as FlatListData[]}
           renderItem={({ item }: { item: FlatListData }) => (
-            <TouchableOpacity activeOpacity={0.3}>
-              <Box py={4} borderBottomWidth={1} borderColor="#ddd">
+            <TouchableOpacity
+              activeOpacity={0.3}
+              onPress={() => Navigate(item.routeName)}
+            >
+              <Box
+                py={4}
+                borderBottomWidth={1}
+                borderColor="#ddd"
+                flexDirection="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
                 <Text fontSize={16} fontWeight={600}>
                   {item.title}
                 </Text>
+                <MaterialIcons
+                  name="keyboard-arrow-right"
+                  size={24}
+                  color="black"
+                />
               </Box>
             </TouchableOpacity>
           )}
-          keyExtractor={(index: any) => index}
+          keyExtractor={(item) => item.routeName}
         />
         <Box
           w="full"
@@ -56,7 +83,7 @@ export default function Settings() {
           </Button>
 
           <Box flexDirection="row" justifyContent="center">
-            <Text color="gray.400">Feito por </Text>
+            <Text color="gray.400">Aplicativo feito por </Text>
             <Link href="https://josuenm-portfolio.vercel.app">
               Josué Mendonça
             </Link>
