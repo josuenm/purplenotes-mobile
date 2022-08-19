@@ -5,6 +5,7 @@ import Dashboard from "../screens/Dashboard";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Settings from "../screens/Settings";
+import UserInformation from "../screens/UserInformation";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export default function AppNavigation() {
         <>
           <Screen name="Dashboard" component={Dashboard} />
           <Screen name="Settings" component={Settings} />
+          <Screen name="UserInformation" component={UserInformation} />
         </>
       ) : (
         <>
