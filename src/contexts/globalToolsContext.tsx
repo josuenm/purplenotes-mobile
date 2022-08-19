@@ -1,10 +1,9 @@
-import { createNavigationContainerRef } from "@react-navigation/native";
 import { useToast } from "native-base";
 import { createContext, useState } from "react";
 import { SpinnerLoading } from "../components/LoadingScreen";
 
 export interface GlobalToolsContextProps {
-  handleError: ({ title }: { title: string }) => void;
+  handleError: (title: string) => void;
   handleLoading: (value: boolean) => void;
 }
 
@@ -25,7 +24,7 @@ export const GlobalToolsContextProvider = ({ children }: ProviderProps) => {
     setIsLoading(value);
   }
 
-  function handleError({ title }: { title: string }) {
+  function handleError(title: string) {
     toast.show({
       title,
       duration: 3000,

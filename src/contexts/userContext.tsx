@@ -67,8 +67,8 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
     switch (response.status) {
       case 200:
         HandleToken.setItem(
-          "@purplenotes:user",
-          JSON.stringify(data),
+          "@purplenotes:token",
+          JSON.stringify(response.data.token),
           60 * 60 * 24 * 30
         );
         handleUser({
@@ -79,21 +79,15 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
         break;
 
       case 401:
-        handleError({
-          title: "Email or password is incorrect",
-        });
+        handleError("Email or password is incorrect");
         break;
 
       case 404:
-        handleError({
-          title: "User not found",
-        });
+        handleError("User not found");
         break;
 
       default:
-        handleError({
-          title: "Something wrong, try again",
-        });
+        handleError("Something wrong, try again");
         break;
     }
 
@@ -114,8 +108,8 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
     switch (response.status) {
       case 201:
         HandleToken.setItem(
-          "@purplenotes:user",
-          JSON.stringify(data),
+          "@purplenotes:token",
+          JSON.stringify(response.data.token),
           60 * 60 * 24 * 30
         );
         handleUser({
@@ -126,15 +120,11 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
         break;
 
       case 409:
-        handleError({
-          title: "User already exists",
-        });
+        handleError("User already exists");
         break;
 
       default:
-        handleError({
-          title: "Something wrong, try again",
-        });
+        handleError("Something wrong, try again");
         break;
     }
 
