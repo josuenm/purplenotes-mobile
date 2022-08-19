@@ -15,7 +15,7 @@ export default function Settings() {
   const data = [
     {
       title: "User information",
-      routeName: "AccountInformation",
+      routeName: "UserInformation",
     },
     {
       title: "About App",
