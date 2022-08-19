@@ -45,8 +45,9 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
 
   async function Exit() {
     handleLoading(true);
-    AsyncStorage.removeItem("@purplenotes:user");
-    AsyncStorage.removeItem("@purplenotes:token");
+    await AsyncStorage.removeItem("@purplenotes:user");
+    await AsyncStorage.removeItem("@purplenotes:token");
+    setUser(null);
     RootNavigation.navigate("Login");
     handleLoading(false);
   }
