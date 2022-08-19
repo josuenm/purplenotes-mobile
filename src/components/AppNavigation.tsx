@@ -4,6 +4,7 @@ import { UserContext, UserContextProps } from "../contexts/userContext";
 import Dashboard from "../screens/Dashboard";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
+import Settings from "../screens/Settings";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -18,7 +19,10 @@ export default function AppNavigation() {
       }}
     >
       {user ? (
-        <Screen name="Dashboard" component={Dashboard} />
+        <>
+          <Screen name="Dashboard" component={Dashboard} />
+          <Screen name="Settings" component={Settings} />
+        </>
       ) : (
         <>
           <Screen name="Login" component={Login} />
