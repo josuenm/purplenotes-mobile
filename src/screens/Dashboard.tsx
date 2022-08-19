@@ -6,7 +6,7 @@ export default function Dashboard() {
   const { List, notes } = useContext(NotesContext) as NotesContextProps;
 
   return (
-    <ScrollView>
+    <ScrollView bgColor="#eee">
       <Box pt={20} px={5}>
         <Text fontSize={21} fontWeight="bold">
           Notes:
