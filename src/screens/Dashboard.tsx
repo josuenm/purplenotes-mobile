@@ -1,25 +1,25 @@
-import { Box, Button, Center, ScrollView, Text } from "native-base";
+import { Box, ScrollView, Text } from "native-base";
 import { useContext } from "react";
 import { NotesContext, NotesContextProps } from "../contexts/notesContext";
 
 export default function Dashboard() {
-  const { List } = useContext(NotesContext) as NotesContextProps;
+  const { List, notes } = useContext(NotesContext) as NotesContextProps;
 
   return (
     <ScrollView>
-      <Box bg="violet.600" w="full" h={80}>
-        <Center flex={1}>
-          <Button bg="white" _pressed={{ bg: "gray.200" }} onPress={List}>
-            <Text fontSize={22} color="black" px={10}>
-              Create note
-            </Text>
-          </Button>
-        </Center>
-      </Box>
-      <Box p={5}>
+      <Box pt={20} px={5}>
         <Text fontSize={21} fontWeight="bold">
           Notes:
         </Text>
+        {notes.length > 0 ? (
+          <Text fontSize={21} textAlign="center" fontWeight="medium">
+            List
+          </Text>
+        ) : (
+          <Text fontSize={21} textAlign="center" fontWeight="medium">
+            Nothing to list
+          </Text>
+        )}
       </Box>
     </ScrollView>
   );
