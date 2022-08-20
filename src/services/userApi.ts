@@ -1,22 +1,47 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { LoginProps, RegisterProps, UserProps } from "../types/UserProps";
 import Keys from "../utils/KeysFile";
 
 const api = axios.create({
   baseURL: `${Keys.API_URL}/users`,
 });
 
+const getToken = async () => {
+  const token = (await AsyncStorage.getItem("@purplenotes:token")) as string;
+  return JSON.parse(token).value.split('"').join("");
+};
+
 export default {
-  login: async (data: { email: string; password: string }) => {
+  login: async (data: LoginProps) => {
     return await api
       .post("/login", data)
       .then((response) => response)
       .catch((error) => error.response);
   },
 
-  register: async (data: { name: string; email: string; password: string }) => {
+  register: async (data: RegisterProps) => {
     return await api
       .post("/register", data)
       .then((response) => response)
+      .catch((error) => error.response);
+  },
+
+  updateBasicInfo: async (data: UserProps) => {
+    return await api
+      .put("/", data, {
+        headers: { "purplenotes.token": await getToken() },
+      })
+      .then((data) => data)
+      .catch((error) => error.response);
+  },
+
+  updatePassword: async (data: string) => {
+    return await api
+      .put("/password", data, {
+        headers: { "purplenotes.token": await getToken() },
+      })
+      .then((data) => data)
       .catch((error) => error.response);
   },
 };
