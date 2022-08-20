@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import notesApi from "../services/notesApi";
+import { NotesProps } from "../types/NoteProps";
 import {
   GlobalToolsContext,
   GlobalToolsContextProps,
@@ -10,22 +11,22 @@ interface ProviderProps {
   children: React.ReactNode;
 }
 
-type NotesProps = {};
-
 export interface NotesContextProps {
   List: () => void;
-  notes: NotesProps;
+  Create: () => void;
+  Delete: (id: string) => void;
+  notes: NotesProps[];
 }
 
 export const NotesContext = createContext<NotesContextProps | null>(null);
 
 export const NotesContextProvider = ({ children }: ProviderProps) => {
   const { Exit } = useContext(UserContext) as UserContextProps;
-  const { handleError } = useContext(
+  const { handleError, handleSuccessful } = useContext(
     GlobalToolsContext
   ) as GlobalToolsContextProps;
 
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState<NotesProps[] | []>([]);
 
   async function List() {
     const response = await notesApi.allNotes();
@@ -49,10 +50,49 @@ export const NotesContextProvider = ({ children }: ProviderProps) => {
     }
   }
 
+  async function Create() {
+    const response = await notesApi.create();
+
+    switch (response.status) {
+      case 201:
+        List();
+        break;
+
+      case 401:
+        Exit();
+        break;
+
+      default:
+        handleError("Something wrong, try again");
+        break;
+    }
+  }
+
+  async function Delete(id: string) {
+    const response = await notesApi.delete(id);
+
+    switch (response.status) {
+      case 204:
+        handleSuccessful("Successfully deleted");
+        List();
+        break;
+
+      case 401:
+        Exit();
+        break;
+
+      default:
+        handleError("Something wrong, try again");
+        break;
+    }
+  }
+
   return (
     <NotesContext.Provider
       value={{
         List,
+        Create,
+        Delete,
         notes,
       }}
     >
