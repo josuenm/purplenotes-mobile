@@ -1,4 +1,4 @@
-import { FormControl, Heading, Input, ScrollView, Stack } from "native-base";
+import { FormControl, Heading, Input, ScrollView, VStack } from "native-base";
 import { Controller, useForm } from "react-hook-form";
 import { Keyboard } from "react-native";
 import { NormalButton } from "../components/Buttons";
@@ -25,7 +25,7 @@ function EditBasicInfo() {
   };
 
   return (
-    <Stack w="full" space={5}>
+    <VStack w="full" space={5}>
       <Heading textAlign="center">Basic Information</Heading>
 
       <FormControl isRequired>
@@ -73,7 +73,7 @@ function EditBasicInfo() {
       </FormControl>
 
       <NormalButton>Save</NormalButton>
-    </Stack>
+    </VStack>
   );
 }
 
@@ -88,11 +88,11 @@ function EditPassword() {
   };
 
   return (
-    <Stack w="full" space={5}>
+    <VStack w="full" space={5}>
       <Heading textAlign="center">Password Information</Heading>
 
       <FormControl isRequired>
-        <FormControl.Label>Password:</FormControl.Label>
+        <FormControl.Label>New password:</FormControl.Label>
         <Controller
           control={control}
           rules={{
@@ -106,7 +106,7 @@ function EditPassword() {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Type your password"
+              placeholder="Type your new password"
             />
           )}
         />
@@ -114,7 +114,7 @@ function EditPassword() {
       </FormControl>
 
       <FormControl isRequired>
-        <FormControl.Label>Password Confirmation:</FormControl.Label>
+        <FormControl.Label>New password confirmation:</FormControl.Label>
         <Controller
           control={control}
           rules={{
@@ -128,7 +128,7 @@ function EditPassword() {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Type your password again"
+              placeholder="Type your new password again"
             />
           )}
         />
@@ -136,7 +136,7 @@ function EditPassword() {
       </FormControl>
 
       <NormalButton>Save</NormalButton>
-    </Stack>
+    </VStack>
   );
 }
 
@@ -145,10 +145,10 @@ export default function AccountInformation() {
     <>
       <ScrollView showsVerticalScrollIndicator={false} px={5}>
         <HeaderWithBackButton returnTo="Settings" />
-        <Stack space={12} pt={12} pb={16}>
+        <VStack space={12} pt={12} pb={16}>
           <EditBasicInfo />
           <EditPassword />
-        </Stack>
+        </VStack>
       </ScrollView>
     </>
   );
