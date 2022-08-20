@@ -8,7 +8,7 @@ interface ButtonProps {
 export function NormalButton({ children, ...rest }: ButtonProps) {
   return (
     <Button colorScheme="violet" {...rest}>
-      <Text fontSize={18} color="white">
+      <Text fontSize={18} color="white" fontWeight={500}>
         {children}
       </Text>
     </Button>
@@ -18,7 +18,7 @@ export function NormalButton({ children, ...rest }: ButtonProps) {
 export function OutlineButton({ children, ...rest }: ButtonProps) {
   return (
     <Button variant="outline" borderColor="violet.600" w="full" {...rest}>
-      <Text fontSize={18} color="violet.600">
+      <Text fontSize={18} color="violet.600" fontWeight={500}>
         {children}
       </Text>
     </Button>
