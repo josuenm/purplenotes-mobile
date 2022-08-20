@@ -17,7 +17,7 @@ interface PasswordInfoProps {
 }
 
 function EditBasicInfo() {
-  const { user } = useContext(UserContext) as UserContextProps;
+  const { user, UpdateBasicInfo } = useContext(UserContext) as UserContextProps;
 
   const {
     control,
@@ -39,7 +39,7 @@ function EditBasicInfo() {
       return;
     }
 
-    console.log("São diferentes");
+    UpdateBasicInfo(data);
   };
 
   return (
@@ -102,14 +102,23 @@ function EditBasicInfo() {
 }
 
 function EditPassword() {
+  const { UpdatePassword } = useContext(UserContext) as UserContextProps;
+
   const {
     control,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<PasswordInfoProps>();
   const onSubmit = (data: PasswordInfoProps) => {
     Keyboard.dismiss();
+
+    const response = UpdatePassword(data.password) as boolean | void;
+    if (response) {
+      setValue("password", "");
+      setValue("passwordConfirmation", "");
+    }
   };
 
   let password = watch("password");
