@@ -1,8 +1,10 @@
 import { FormControl, Heading, Input, ScrollView, VStack } from "native-base";
+import { useContext, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Keyboard } from "react-native";
 import { NormalButton } from "../components/Buttons";
 import HeaderWithBackButton from "../components/HeaderWithBackButton";
+import { UserContext, UserContextProps } from "../contexts/userContext";
 
 interface BasicInfoProps {
   name: string;
@@ -15,26 +17,41 @@ interface PasswordInfoProps {
 }
 
 function EditBasicInfo() {
+  const { user } = useContext(UserContext) as UserContextProps;
+
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<BasicInfoProps>();
+  } = useForm<BasicInfoProps>({
+    defaultValues: useMemo(() => {
+      return {
+        name: user?.name,
+        email: user?.email,
+      };
+    }, []),
+  });
+
   const onSubmit = (data: BasicInfoProps) => {
     Keyboard.dismiss();
+
+    if (data.name === user?.name && data.email === user?.email) {
+      return;
+    }
+
+    console.log("São diferentes");
   };
 
   return (
     <VStack w="full" space={5}>
       <Heading textAlign="center">Basic Information</Heading>
 
-      <FormControl isRequired>
+      <FormControl isRequired isInvalid={"name" in errors}>
         <FormControl.Label>Name:</FormControl.Label>
         <Controller
           control={control}
           rules={{
             required: "Field is required",
-            minLength: { value: 5, message: "Invalid name" },
           }}
           name="name"
           render={({ field: { onChange, onBlur, value } }) => (
@@ -47,16 +64,21 @@ function EditBasicInfo() {
             />
           )}
         />
-        <FormControl.ErrorMessage></FormControl.ErrorMessage>
+        <FormControl.ErrorMessage>
+          {errors.name?.message}
+        </FormControl.ErrorMessage>
       </FormControl>
 
-      <FormControl isRequired>
+      <FormControl isRequired isInvalid={"email" in errors}>
         <FormControl.Label>Email:</FormControl.Label>
         <Controller
           control={control}
           rules={{
             required: "Field is required",
-            minLength: { value: 5, message: "Invalid email" },
+            pattern: {
+              message: "Invalid email",
+              value: /^\b[A-Z0-9._%]+@[A-Z0-9*-]+\.[A-Z]{2,4}\b$/i,
+            },
           }}
           name="email"
           render={({ field: { onChange, onBlur, value } }) => (
@@ -69,10 +91,12 @@ function EditBasicInfo() {
             />
           )}
         />
-        <FormControl.ErrorMessage></FormControl.ErrorMessage>
+        <FormControl.ErrorMessage>
+          {errors.email?.message}
+        </FormControl.ErrorMessage>
       </FormControl>
 
-      <NormalButton>Save</NormalButton>
+      <NormalButton onPress={handleSubmit(onSubmit)}>Save</NormalButton>
     </VStack>
   );
 }
@@ -81,23 +105,26 @@ function EditPassword() {
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<PasswordInfoProps>();
   const onSubmit = (data: PasswordInfoProps) => {
     Keyboard.dismiss();
   };
 
+  let password = watch("password");
+
   return (
     <VStack w="full" space={5}>
       <Heading textAlign="center">Password Information</Heading>
 
-      <FormControl isRequired>
+      <FormControl isRequired isInvalid={"password" in errors}>
         <FormControl.Label>New password:</FormControl.Label>
         <Controller
           control={control}
           rules={{
             required: "Field is required",
-            minLength: { value: 5, message: "Invalid email" },
+            minLength: { value: 1, message: "Invalid password" },
           }}
           name="password"
           render={({ field: { onChange, onBlur, value } }) => (
@@ -110,16 +137,20 @@ function EditPassword() {
             />
           )}
         />
-        <FormControl.ErrorMessage></FormControl.ErrorMessage>
+        <FormControl.ErrorMessage>
+          {errors.password?.message}
+        </FormControl.ErrorMessage>
       </FormControl>
 
-      <FormControl isRequired>
+      <FormControl isRequired isInvalid={"passwordConfirmation" in errors}>
         <FormControl.Label>New password confirmation:</FormControl.Label>
         <Controller
           control={control}
           rules={{
             required: "Field is required",
-            minLength: { value: 5, message: "Invalid email" },
+            validate: (value) =>
+              value === password || "The passwords do not match",
+            minLength: { value: 1, message: "Invalid password" },
           }}
           name="passwordConfirmation"
           render={({ field: { onChange, onBlur, value } }) => (
@@ -132,10 +163,12 @@ function EditPassword() {
             />
           )}
         />
-        <FormControl.ErrorMessage></FormControl.ErrorMessage>
+        <FormControl.ErrorMessage>
+          {errors.passwordConfirmation?.message}
+        </FormControl.ErrorMessage>
       </FormControl>
 
-      <NormalButton>Save</NormalButton>
+      <NormalButton onPress={handleSubmit(onSubmit)}>Save</NormalButton>
     </VStack>
   );
 }
