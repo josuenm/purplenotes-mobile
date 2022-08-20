@@ -3,8 +3,9 @@ import { createContext, useState } from "react";
 import { SpinnerLoading } from "../components/LoadingScreen";
 
 export interface GlobalToolsContextProps {
-  handleError: (title: string) => void;
   handleLoading: (value: boolean) => void;
+  handleError: (title: string) => void;
+  handleSuccessful: (title: string) => void;
 }
 
 interface ProviderProps {
@@ -32,8 +33,18 @@ export const GlobalToolsContextProvider = ({ children }: ProviderProps) => {
     });
   }
 
+  function handleSuccessful(title: string) {
+    toast.show({
+      title,
+      duration: 3000,
+      bgColor: "green.600",
+    });
+  }
+
   return (
-    <GlobalToolsContext.Provider value={{ handleLoading, handleError }}>
+    <GlobalToolsContext.Provider
+      value={{ handleLoading, handleError, handleSuccessful }}
+    >
       {isLoading && <SpinnerLoading />}
       {children}
     </GlobalToolsContext.Provider>
