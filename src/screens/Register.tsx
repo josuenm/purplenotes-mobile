@@ -1,6 +1,8 @@
-import { Center, Divider, FormControl, Image, Input, Stack } from "native-base";
+import { Divider, FormControl, Image, Input, VStack } from "native-base";
 import { Controller, useForm } from "react-hook-form";
+import { Keyboard } from "react-native";
 import { NormalButton, OutlineButton } from "../components/Buttons";
+import ScreenContainer from "../components/ScreenContainer";
 import userApi from "../services/userApi";
 
 interface RegisterProps {
@@ -24,6 +26,8 @@ export default function Register({ navigation }: RegisterProps) {
     formState: { errors },
   } = useForm<IFormInputs>();
   const onSubmit = (data: IFormInputs) => {
+    Keyboard.dismiss();
+
     userApi.register({
       name: data.name,
       email: data.email.replace(/\s/g, ""),
@@ -32,9 +36,9 @@ export default function Register({ navigation }: RegisterProps) {
   };
 
   return (
-    <Center flex={1} paddingX={5}>
+    <ScreenContainer justifyContent="center">
       <Image source={logo} alt="Logo" size="md" w="full" mb={5} />
-      <Stack w="full" space={5}>
+      <VStack w="full" space={5}>
         <FormControl isRequired isInvalid={"name" in errors}>
           <FormControl.Label>Name:</FormControl.Label>
           <Controller
@@ -112,7 +116,7 @@ export default function Register({ navigation }: RegisterProps) {
         <OutlineButton onPress={() => navigation.navigate("Login")}>
           Login
         </OutlineButton>
-      </Stack>
-    </Center>
+      </VStack>
+    </ScreenContainer>
   );
 }
