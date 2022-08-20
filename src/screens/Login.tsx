@@ -1,9 +1,10 @@
-import { Center, Divider, FormControl, Image, Stack } from "native-base";
+import { Divider, FormControl, Image, VStack } from "native-base";
 import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Keyboard } from "react-native";
 import { NormalButton, OutlineButton } from "../components/Buttons";
 import { Input } from "../components/Input";
+import ScreenContainer from "../components/ScreenContainer";
 import { UserContext, UserContextProps } from "../contexts/userContext";
 
 interface LoginProps {
@@ -33,9 +34,9 @@ export default function Login({ navigation }: LoginProps) {
   };
 
   return (
-    <Center flex={1} paddingX={5}>
+    <ScreenContainer justifyContent="center">
       <Image source={logo} alt="Logo" size="md" w="full" mb={5} />
-      <Stack w="full" space={5}>
+      <VStack w="full" space={5}>
         <FormControl isRequired isInvalid={"email" in errors}>
           <FormControl.Label>Email:</FormControl.Label>
           <Controller
@@ -90,7 +91,7 @@ export default function Login({ navigation }: LoginProps) {
         <OutlineButton onPress={() => navigation.navigate("Register")}>
           Register
         </OutlineButton>
-      </Stack>
-    </Center>
+      </VStack>
+    </ScreenContainer>
   );
 }
