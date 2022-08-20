@@ -22,4 +22,31 @@ export default {
       .then((response) => response)
       .catch((error) => error.response);
   },
+
+  create: async () => {
+    const data = {
+      title: "New note",
+      body: "<p>New note</p>",
+    };
+
+    return await api
+      .post("/", data, {
+        headers: {
+          "purplenotes.token": await getToken(),
+        },
+      })
+      .then((response) => response)
+      .catch((error) => error.response);
+  },
+
+  delete: async (id: string) => {
+    return await api
+      .delete(`/${id}`, {
+        headers: {
+          "purplenotes.token": await getToken(),
+        },
+      })
+      .then((response) => response)
+      .catch((error) => error.response);
+  },
 };
