@@ -15,6 +15,7 @@ interface IFormInputs {
   name: string;
   email: string;
   password: string;
+  passwordConfirmation: string;
 }
 
 export default function Register({ navigation }: RegisterProps) {
@@ -23,6 +24,7 @@ export default function Register({ navigation }: RegisterProps) {
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<IFormInputs>();
   const onSubmit = (data: IFormInputs) => {
@@ -34,6 +36,8 @@ export default function Register({ navigation }: RegisterProps) {
       password: data.password,
     });
   };
+
+  const password = watch("password");
 
   return (
     <ScreenContainer justifyContent="center">
@@ -68,7 +72,11 @@ export default function Register({ navigation }: RegisterProps) {
             control={control}
             rules={{
               required: "Field is required",
-              maxLength: { value: 5, message: "Invalid email" },
+              pattern: {
+                message: "Invalid email",
+                value: /^\b[A-Z0-9._%]+@[A-Z0-9*-]+\.[A-Z]{2,4}\b$/i,
+              },
+              minLength: { value: 1, message: "Invalid password" },
             }}
             name="email"
             render={({ field: { onChange, onBlur, value } }) => (
@@ -92,6 +100,7 @@ export default function Register({ navigation }: RegisterProps) {
             control={control}
             rules={{
               required: "Field is required",
+              minLength: { value: 1, message: "Invalid password" },
             }}
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
@@ -106,6 +115,32 @@ export default function Register({ navigation }: RegisterProps) {
           />
           <FormControl.ErrorMessage>
             {errors.password?.message}
+          </FormControl.ErrorMessage>
+        </FormControl>
+
+        <FormControl isRequired isInvalid={"passwordConfirmation" in errors}>
+          <FormControl.Label>Password confirmation:</FormControl.Label>
+          <Controller
+            control={control}
+            rules={{
+              required: "Field is required",
+              validate: (value) =>
+                value === password || "The passwords do not match",
+              minLength: { value: 1, message: "Invalid password" },
+            }}
+            name="passwordConfirmation"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                type="text"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Type your password again"
+              />
+            )}
+          />
+          <FormControl.ErrorMessage>
+            {errors.passwordConfirmation?.message}
           </FormControl.ErrorMessage>
         </FormControl>
 

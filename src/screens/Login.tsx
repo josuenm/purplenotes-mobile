@@ -43,7 +43,10 @@ export default function Login({ navigation }: LoginProps) {
             control={control}
             rules={{
               required: "Field is required",
-              minLength: { value: 5, message: "Invalid email" },
+              pattern: {
+                message: "Invalid email",
+                value: /^\b[A-Z0-9._%]+@[A-Z0-9*-]+\.[A-Z]{2,4}\b$/i,
+              },
             }}
             name="email"
             render={({ field: { onChange, onBlur, value } }) => (
@@ -67,6 +70,7 @@ export default function Login({ navigation }: LoginProps) {
             control={control}
             rules={{
               required: "Field is required",
+              minLength: { value: 1, message: "Invalid password" },
             }}
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
