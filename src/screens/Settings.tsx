@@ -3,6 +3,7 @@ import { Box, Button, FlatList, Heading, Link, Text } from "native-base";
 import { useContext } from "react";
 import { TouchableOpacity } from "react-native";
 import HeaderWithBackButton from "../components/HeaderWithBackButton";
+import ScreenContainer from "../components/ScreenContainer";
 import { UserContext, UserContextProps } from "../contexts/userContext";
 import * as RootNavigation from "../utils/RootNavigation";
 
@@ -31,14 +32,8 @@ export default function Settings() {
 
   return (
     <>
-      <HeaderWithBackButton returnTo="Dashboard" />
-      <Box
-        flex={1}
-        bgColor="#eee"
-        flexDirection="column"
-        justifyContent="space-between"
-        px={5}
-      >
+      <ScreenContainer flexDirection="column" justifyContent="space-between">
+        <HeaderWithBackButton returnTo="Dashboard" />
         <FlatList
           bgColor="#eee"
           mt={5}
@@ -72,7 +67,7 @@ export default function Settings() {
         <Box
           w="full"
           justifyContent="center"
-          py={3}
+          py={5}
           borderTopColor="#ddd"
           borderTopWidth={1}
         >
@@ -89,7 +84,7 @@ export default function Settings() {
             </Link>
           </Box>
         </Box>
-      </Box>
+      </ScreenContainer>
     </>
   );
 }
