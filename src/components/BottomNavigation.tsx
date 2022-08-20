@@ -1,7 +1,9 @@
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
 import { Box, IconButton, Text } from "native-base";
+import { useContext } from "react";
 import { TouchableOpacity } from "react-native";
+import { NotesContext, NotesContextProps } from "../contexts/notesContext";
 import * as RootNavigation from "../utils/RootNavigation";
 
 interface ItemProps {
@@ -34,6 +36,8 @@ function Item({ title, routeName, iconName }: ItemProps) {
 }
 
 function AddButton() {
+  const { Create } = useContext(NotesContext) as NotesContextProps;
+
   return (
     <IconButton
       borderRadius="full"
@@ -42,6 +46,7 @@ function AddButton() {
       p={3}
       translateY={-20}
       _pressed={{ opacity: 0.7 }}
+      onPress={Create}
     />
   );
 }
