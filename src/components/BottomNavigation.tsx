@@ -29,7 +29,9 @@ function Item({ title, routeName, iconName }: ItemProps) {
           size={20}
           color={isActive ? "#7c3aed" : "black"}
         />
-        <Text color={isActive ? "#7c3aed" : "black"}>{title}</Text>
+        <Text color={isActive ? "#7c3aed" : "black"} fontWeight={500}>
+          {title}
+        </Text>
       </Box>
     </TouchableOpacity>
   );
@@ -63,6 +65,7 @@ export default function BottomNavigation() {
       justifyContent="space-between"
       px={5}
       py={1}
+      bgColor="rgba(238, 238, 238, .9)"
     >
       <Item title="Home" routeName="Dashboard" iconName="home-outline" />
       <AddButton />
