@@ -20,7 +20,7 @@ export default function Dashboard() {
           <Heading fontSize={21} fontWeight={700}>
             Notes:
           </Heading>
-          <VStack my={5} space={5}>
+          <VStack mt={5} mb={24} space={5}>
             {notes.length > 0 ? (
               notes.map((note: NotesProps) => (
                 <NoteCard note={note} key={note._id} />
