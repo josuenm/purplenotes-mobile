@@ -13,13 +13,10 @@ export default function HeaderWithBackButton({ returnTo }: HeaderProps) {
 
   return (
     <Box
-      w="full"
       flexDirection="row"
       justifyContent="flex-start"
       alignItems="center"
       pt={34}
-      px={5}
-      bgColor="#eee"
     >
       <Button
         w={42}
