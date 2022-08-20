@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import userApi from "../services/userApi";
+import { LoginProps, RegisterProps, UserProps } from "../types/UserProps";
 import HandleToken from "../utils/HandleToken";
 import * as RootNavigation from "../utils/RootNavigation";
 import {
@@ -18,26 +19,23 @@ interface ContextProviderProps {
   children: React.ReactNode;
 }
 
-interface UserProps {
-  name: string;
-  email: string;
-}
-
 export interface UserContextProps {
-  Login: (data: { email: string; password: string }) => Promise<void>;
+  Login: (data: LoginProps) => Promise<void>;
   Register: (data: {
     name: string;
     email: string;
     password: string;
   }) => Promise<void>;
   Exit: () => void;
+  UpdateBasicInfo: (data: UserProps) => void;
+  UpdatePassword: (data: string) => void;
   user: null | UserProps;
 }
 
 export const UserContext = createContext<UserContextProps | null>(null);
 
 export const UserContextProvider = ({ children }: ContextProviderProps) => {
-  const { handleError, handleLoading } = useContext(
+  const { handleError, handleLoading, handleSuccessful } = useContext(
     GlobalToolsContext
   ) as GlobalToolsContextProps;
 
@@ -57,7 +55,7 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
     AsyncStorage.setItem("@purplenotes:user", JSON.stringify(data));
   }
 
-  async function Login(data: { email: string; password: string }) {
+  async function Login(data: LoginProps) {
     handleLoading(true);
 
     const response = (await userApi.login(data)) as unknown as {
@@ -94,11 +92,8 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
 
     handleLoading(false);
   }
-  async function Register(data: {
-    name: string;
-    email: string;
-    password: string;
-  }) {
+
+  async function Register(data: RegisterProps) {
     handleLoading(true);
 
     const response = (await userApi.register(data)) as unknown as {
@@ -132,6 +127,49 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
     handleLoading(false);
   }
 
+  async function UpdateBasicInfo(data: UserProps) {
+    if (user?.name === data.name && user?.email === data.email) {
+      return;
+    }
+    handleLoading(true);
+    const response = await userApi.updateBasicInfo(data);
+
+    switch (response.status) {
+      case 200:
+        handleSuccessful("Successful update");
+        handleUser({
+          name: response.data.name,
+          email: response.data.email,
+        });
+        break;
+
+      default:
+        handleError("Something wrong, try again");
+        break;
+    }
+
+    handleLoading(false);
+  }
+
+  async function UpdatePassword(data: string) {
+    handleLoading(true);
+    const response = await userApi.updatePassword(data);
+
+    switch (response.status) {
+      case 200:
+        handleSuccessful("Successful update");
+        handleLoading(false);
+        return true;
+        break;
+
+      default:
+        handleError("Something wrong, try again");
+        break;
+    }
+
+    handleLoading(false);
+  }
+
   const getUser = useCallback(async () => {
     const data = await AsyncStorage.getItem("@purplenotes:user");
     if (data) {
@@ -148,8 +186,10 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
       value={{
         Login,
         Register,
-        user,
         Exit,
+        UpdateBasicInfo,
+        UpdatePassword,
+        user,
       }}
     >
       {children}
