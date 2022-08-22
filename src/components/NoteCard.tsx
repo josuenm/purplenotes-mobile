@@ -1,9 +1,10 @@
 import { Box, Button, Heading, Text, VStack } from "native-base";
 import { useContext } from "react";
 import { NotesContext, NotesContextProps } from "../contexts/notesContext";
-import { NotesProps } from "../types/NoteProps";
+import { NoteProps } from "../types/NoteProps";
+import * as RootNavigation from "../utils/RootNavigation";
 
-export default function NoteCard({ note }: { note: NotesProps }) {
+export default function NoteCard({ note }: { note: NoteProps }) {
   const { Delete } = useContext(NotesContext) as NotesContextProps;
 
   const formatedTitle = (title: string) => {
@@ -22,13 +23,19 @@ export default function NoteCard({ note }: { note: NotesProps }) {
     return newBody;
   };
 
+  function Navigate() {
+    RootNavigation.navigate("EditNote", {
+      id: note._id,
+    });
+  }
+
   return (
     <Box borderWidth={1} borderColor="gray.500" p={5} borderRadius="lg">
       <Heading>{formatedTitle(note.title)}</Heading>
       <Text>{formatedBody(note.body)}</Text>
 
       <VStack space={4} mt={5}>
-        <Button colorScheme="violet">
+        <Button colorScheme="violet" onPress={Navigate}>
           <Text color="white" fontWeight={500}>
             Access
           </Text>
