@@ -44,4 +44,13 @@ export default {
       .then((data) => data)
       .catch((error) => error.response);
   },
+
+  deleteAccount: async () => {
+    return await api
+      .delete("/delete", {
+        headers: { "purplenotes.token": await getToken() },
+      })
+      .then((data) => data)
+      .catch((error) => error.response);
+  },
 };
