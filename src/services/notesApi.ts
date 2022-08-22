@@ -49,4 +49,15 @@ export default {
       .then((response) => response)
       .catch((error) => error.response);
   },
+
+  update: async (id: string, data: string) => {
+    return await api
+      .put(`/${id}`, data, {
+        headers: {
+          "purplenotes.token": await getToken(),
+        },
+      })
+      .then((data) => data)
+      .catch((error) => error.response);
+  },
 };
