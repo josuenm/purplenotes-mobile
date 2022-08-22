@@ -184,14 +184,12 @@ function EditPassword() {
 
 export default function AccountInformation() {
   return (
-    <>
-      <ScrollView showsVerticalScrollIndicator={false} px={5}>
-        <HeaderWithBackButton returnTo="Settings" />
-        <VStack space={12} pt={12} pb={16}>
-          <EditBasicInfo />
-          <EditPassword />
-        </VStack>
-      </ScrollView>
-    </>
+    <ScrollView showsVerticalScrollIndicator={false} px={5}>
+      <HeaderWithBackButton returnTo="Settings" />
+      <VStack space={12} pt={12} pb={16}>
+        <EditBasicInfo />
+        <EditPassword />
+      </VStack>
+    </ScrollView>
   );
 }
