@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext } from "react";
 import { UserContext, UserContextProps } from "../contexts/userContext";
 import Dashboard from "../screens/Dashboard";
+import EditNote from "../screens/EditNote";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Settings from "../screens/Settings";
@@ -24,6 +25,7 @@ export default function AppNavigation() {
           <Screen name="Dashboard" component={Dashboard} />
           <Screen name="Settings" component={Settings} />
           <Screen name="UserInformation" component={UserInformation} />
+          <Screen name="EditNote" component={EditNote} />
         </>
       ) : (
         <>
