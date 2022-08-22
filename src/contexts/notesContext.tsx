@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import notesApi from "../services/notesApi";
-import { NotesProps } from "../types/NoteProps";
+import { NoteProps } from "../types/NoteProps";
 import {
   GlobalToolsContext,
   GlobalToolsContextProps,
@@ -15,7 +15,8 @@ export interface NotesContextProps {
   List: () => void;
   Create: () => void;
   Delete: (id: string) => void;
-  notes: NotesProps[];
+  FindById: (id: string) => NoteProps | undefined;
+  notes: NoteProps[];
 }
 
 export const NotesContext = createContext<NotesContextProps | null>(null);
@@ -26,7 +27,7 @@ export const NotesContextProvider = ({ children }: ProviderProps) => {
     GlobalToolsContext
   ) as GlobalToolsContextProps;
 
-  const [notes, setNotes] = useState<NotesProps[] | []>([]);
+  const [notes, setNotes] = useState<NoteProps[] | []>([]);
 
   async function List() {
     const response = await notesApi.allNotes();
@@ -48,6 +49,10 @@ export const NotesContextProvider = ({ children }: ProviderProps) => {
         handleError("Something wrong, try again");
         break;
     }
+  }
+
+  function FindById(id: string) {
+    return notes.find((note) => note._id === id);
   }
 
   async function Create() {
@@ -93,6 +98,7 @@ export const NotesContextProvider = ({ children }: ProviderProps) => {
         List,
         Create,
         Delete,
+        FindById,
         notes,
       }}
     >
