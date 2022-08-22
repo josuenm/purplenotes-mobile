@@ -29,6 +29,7 @@ export interface UserContextProps {
   Exit: () => void;
   UpdateBasicInfo: (data: UserProps) => void;
   UpdatePassword: (data: string) => void;
+  Delete: () => void;
   user: null | UserProps;
 }
 
@@ -170,6 +171,23 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
     handleLoading(false);
   }
 
+  async function Delete() {
+    handleLoading(true);
+    const response = await userApi.deleteAccount();
+
+    switch (response.status) {
+      case 204:
+        Exit();
+        break;
+
+      default:
+        handleError("Something wrong, try again");
+        break;
+    }
+
+    handleLoading(false);
+  }
+
   const getUser = useCallback(async () => {
     const data = await AsyncStorage.getItem("@purplenotes:user");
     if (data) {
@@ -189,6 +207,7 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
         Exit,
         UpdateBasicInfo,
         UpdatePassword,
+        Delete,
         user,
       }}
     >
