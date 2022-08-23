@@ -1,6 +1,6 @@
-import { Box, ScrollView } from "native-base";
+import { Box, KeyboardAvoidingView, ScrollView } from "native-base";
 import { createRef, useContext, useEffect, useRef, useState } from "react";
-import { KeyboardAvoidingView, Platform } from "react-native";
+import { Platform } from "react-native";
 import {
   actions,
   RichEditor,
@@ -29,20 +29,29 @@ export default function EditNote({ route }: { route: RouteParams }) {
 
   const richText = createRef() || useRef();
 
+  const { Update } = useContext(NotesContext) as NotesContextProps;
+  const timeout = useRef<NodeJS.Timeout | null>(null);
+  function handleOnChange(data: string) {
+    setContent(data);
+    clearTimeout(timeout.current as NodeJS.Timeout);
+
+    timeout.current = setTimeout(() => Update(route.params.id, data), 2000);
+  }
+
   return (
     <>
       <Box px={5}>
         <HeaderWithBackButton returnTo="Dashboard" />
       </Box>
-      <ScrollView flex={1} pt={10} px={5}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={{ flex: 1, paddingBottom: 150 }}
-        >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        flex={1}
+      >
+        <ScrollView flex={1} mt={10} mb={12} px={5}>
           <RichEditor
             ref={richText as any}
             onChange={(descriptionText) => {
-              setContent(descriptionText);
+              handleOnChange(descriptionText);
             }}
             style={{
               width: "100%",
@@ -50,8 +59,8 @@ export default function EditNote({ route }: { route: RouteParams }) {
             }}
             initialContentHTML={content}
           />
-        </KeyboardAvoidingView>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
       <Box position="absolute" bottom={0} w="full">
         <RichToolbar
           editor={richText}
@@ -62,12 +71,14 @@ export default function EditNote({ route }: { route: RouteParams }) {
             actions.setBold,
             actions.setItalic,
             actions.setUnderline,
-            actions.insertBulletsList,
-            actions.insertOrderedList,
             actions.insertLink,
-            actions.checkboxList,
+            actions.insertOrderedList,
+            actions.insertBulletsList,
+            actions.undo,
+            actions.redo,
           ]}
           style={{
+            width: "100%",
             alignSelf: "center",
           }}
         />
