@@ -1,9 +1,10 @@
 import { Divider, FormControl, Image, Input, VStack } from "native-base";
+import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Keyboard } from "react-native";
 import { NormalButton, OutlineButton } from "../components/Buttons";
 import ScreenContainer from "../components/ScreenContainer";
-import userApi from "../services/userApi";
+import { UserContext, UserContextProps } from "../contexts/userContext";
 
 interface RegisterProps {
   navigation: {
@@ -21,6 +22,8 @@ interface IFormInputs {
 export default function Register({ navigation }: RegisterProps) {
   const logo = require("../../assets/logo.png");
 
+  const { Register } = useContext(UserContext) as UserContextProps;
+
   const {
     control,
     handleSubmit,
@@ -30,7 +33,7 @@ export default function Register({ navigation }: RegisterProps) {
   const onSubmit = (data: IFormInputs) => {
     Keyboard.dismiss();
 
-    userApi.register({
+    Register({
       name: data.name,
       email: data.email.replace(/\s/g, ""),
       password: data.password,
@@ -105,7 +108,7 @@ export default function Register({ navigation }: RegisterProps) {
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                type="text"
+                type="password"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -131,7 +134,7 @@ export default function Register({ navigation }: RegisterProps) {
             name="passwordConfirmation"
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                type="text"
+                type="password"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
