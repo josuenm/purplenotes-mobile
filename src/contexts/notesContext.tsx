@@ -16,6 +16,7 @@ export interface NotesContextProps {
   Create: () => void;
   Delete: (id: string) => void;
   FindById: (id: string) => NoteProps | undefined;
+  Update: (id: string, data: string) => void;
   notes: NoteProps[];
 }
 
@@ -92,6 +93,20 @@ export const NotesContextProvider = ({ children }: ProviderProps) => {
     }
   }
 
+  async function Update(id: string, data: string) {
+    const response = await notesApi.update(id, data);
+
+    switch (response.status) {
+      case 401:
+        Exit();
+        break;
+
+      default:
+        handleError("Something wrong, try again");
+        break;
+    }
+  }
+
   return (
     <NotesContext.Provider
       value={{
@@ -99,6 +114,7 @@ export const NotesContextProvider = ({ children }: ProviderProps) => {
         Create,
         Delete,
         FindById,
+        Update,
         notes,
       }}
     >
