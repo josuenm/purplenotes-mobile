@@ -1,8 +1,9 @@
-import { Divider, FormControl, Image, Input, VStack } from "native-base";
+import { Divider, FormControl, Image, VStack } from "native-base";
 import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Keyboard } from "react-native";
 import { NormalButton, OutlineButton } from "../components/Buttons";
+import { Input } from "../components/Input";
 import ScreenContainer from "../components/ScreenContainer";
 import { UserContext, UserContextProps } from "../contexts/userContext";
 
