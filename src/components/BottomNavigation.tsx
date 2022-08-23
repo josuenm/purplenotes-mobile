@@ -29,7 +29,7 @@ function Item({ title, routeName, iconName }: ItemProps) {
           size={20}
           color={isActive ? "#7c3aed" : "black"}
         />
-        <Text color={isActive ? "#7c3aed" : "black"} fontWeight={500}>
+        <Text color={isActive ? "#7c3aed" : "black"} fontWeight={400}>
           {title}
         </Text>
       </Box>
