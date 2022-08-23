@@ -1,4 +1,12 @@
-import { FormControl, Heading, Input, ScrollView, VStack } from "native-base";
+import {
+  Button,
+  FormControl,
+  Heading,
+  Input,
+  ScrollView,
+  Text,
+  VStack,
+} from "native-base";
 import { useContext, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Keyboard } from "react-native";
@@ -182,6 +190,18 @@ function EditPassword() {
   );
 }
 
+function DeleteButton() {
+  const { Delete } = useContext(UserContext) as UserContextProps;
+
+  return (
+    <Button colorScheme="red" py={3} onPress={Delete}>
+      <Text fontWeight={500} color="white">
+        Delete Account
+      </Text>
+    </Button>
+  );
+}
+
 export default function AccountInformation() {
   return (
     <ScrollView showsVerticalScrollIndicator={false} px={5}>
@@ -189,6 +209,7 @@ export default function AccountInformation() {
       <VStack space={12} pt={12} pb={16}>
         <EditBasicInfo />
         <EditPassword />
+        <DeleteButton />
       </VStack>
     </ScrollView>
   );
