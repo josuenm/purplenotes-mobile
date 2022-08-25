@@ -7,7 +7,7 @@ import {
   RichToolbar,
 } from "react-native-pell-rich-editor";
 import HeaderWithBackButton from "../components/HeaderWithBackButton";
-import { NotesContext, NotesContextProps } from "../contexts/notesContext";
+import { NotesContext } from "../contexts/notesContext";
 
 interface RouteParams {
   params: {
@@ -16,7 +16,7 @@ interface RouteParams {
 }
 
 export default function EditNote({ route }: { route: RouteParams }) {
-  const { FindById } = useContext(NotesContext) as NotesContextProps;
+  const { FindById } = useContext(NotesContext);
 
   const [content, setContent] = useState("");
 
@@ -29,7 +29,7 @@ export default function EditNote({ route }: { route: RouteParams }) {
 
   const richText = createRef() || useRef();
 
-  const { Update } = useContext(NotesContext) as NotesContextProps;
+  const { Update } = useContext(NotesContext);
   const timeout = useRef<NodeJS.Timeout | null>(null);
   function handleOnChange(data: string) {
     setContent(data);

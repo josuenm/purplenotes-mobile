@@ -12,7 +12,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Keyboard } from "react-native";
 import { NormalButton } from "../components/Buttons";
 import HeaderWithBackButton from "../components/HeaderWithBackButton";
-import { UserContext, UserContextProps } from "../contexts/userContext";
+import { UserContext } from "../contexts/userContext";
 
 interface BasicInfoProps {
   name: string;
@@ -25,7 +25,7 @@ interface PasswordInfoProps {
 }
 
 function EditBasicInfo() {
-  const { user, UpdateBasicInfo } = useContext(UserContext) as UserContextProps;
+  const { user, UpdateBasicInfo } = useContext(UserContext);
 
   const {
     control,
@@ -110,7 +110,7 @@ function EditBasicInfo() {
 }
 
 function EditPassword() {
-  const { UpdatePassword } = useContext(UserContext) as UserContextProps;
+  const { UpdatePassword } = useContext(UserContext);
 
   const {
     control,
@@ -191,7 +191,7 @@ function EditPassword() {
 }
 
 function DeleteButton() {
-  const { Delete } = useContext(UserContext) as UserContextProps;
+  const { Delete } = useContext(UserContext);
 
   return (
     <Button colorScheme="red" py={3} onPress={Delete}>

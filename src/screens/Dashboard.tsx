@@ -3,11 +3,11 @@ import { useContext, useEffect } from "react";
 import BottomNavigation from "../components/BottomNavigation";
 import NoteCard from "../components/NoteCard";
 import ScreenContainer from "../components/ScreenContainer";
-import { NotesContext, NotesContextProps } from "../contexts/notesContext";
-import { NotesProps } from "../types/NoteProps";
+import { NotesContext } from "../contexts/notesContext";
+import { NoteProps } from "../types/NoteProps";
 
 export default function Dashboard() {
-  const { List, notes } = useContext(NotesContext) as NotesContextProps;
+  const { List, notes } = useContext(NotesContext);
 
   useEffect(() => {
     List();
@@ -22,7 +22,7 @@ export default function Dashboard() {
           </Heading>
           <VStack mt={5} mb={24} space={5}>
             {notes.length > 0 ? (
-              notes.map((note: NotesProps) => (
+              notes.map((note: NoteProps) => (
                 <NoteCard note={note} key={note._id} />
               ))
             ) : (

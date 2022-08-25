@@ -5,7 +5,7 @@ import { Keyboard } from "react-native";
 import { NormalButton, OutlineButton } from "../components/Buttons";
 import { Input } from "../components/Input";
 import ScreenContainer from "../components/ScreenContainer";
-import { UserContext, UserContextProps } from "../contexts/userContext";
+import { UserContext } from "../contexts/userContext";
 
 interface LoginProps {
   navigation: {
@@ -21,7 +21,7 @@ interface IFormInputs {
 export default function Login({ navigation }: LoginProps) {
   const logo = require("../../assets/logo.png");
 
-  const { Login } = useContext(UserContext) as UserContextProps;
+  const { Login } = useContext(UserContext);
 
   const {
     control,

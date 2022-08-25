@@ -5,13 +5,13 @@ import {
   GlobalToolsContext,
   GlobalToolsContextProps,
 } from "./globalToolsContext";
-import { UserContext, UserContextProps } from "./userContext";
+import { UserContext } from "./userContext";
 
 interface ProviderProps {
   children: React.ReactNode;
 }
 
-export interface NotesContextProps {
+interface NotesContextProps {
   List: () => void;
   Create: () => void;
   Delete: (id: string) => void;
@@ -20,10 +20,10 @@ export interface NotesContextProps {
   notes: NoteProps[];
 }
 
-export const NotesContext = createContext<NotesContextProps | null>(null);
+export const NotesContext = createContext({} as NotesContextProps);
 
 export const NotesContextProvider = ({ children }: ProviderProps) => {
-  const { Exit } = useContext(UserContext) as UserContextProps;
+  const { Exit } = useContext(UserContext);
   const { handleError, handleSuccessful } = useContext(
     GlobalToolsContext
   ) as GlobalToolsContextProps;

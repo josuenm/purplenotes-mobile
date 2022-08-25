@@ -3,7 +3,7 @@ import { useRoute } from "@react-navigation/native";
 import { Box, IconButton, Text } from "native-base";
 import { useContext } from "react";
 import { TouchableOpacity } from "react-native";
-import { NotesContext, NotesContextProps } from "../contexts/notesContext";
+import { NotesContext } from "../contexts/notesContext";
 import * as RootNavigation from "../utils/RootNavigation";
 
 interface ItemProps {
@@ -38,7 +38,7 @@ function Item({ title, routeName, iconName }: ItemProps) {
 }
 
 function AddButton() {
-  const { Create } = useContext(NotesContext) as NotesContextProps;
+  const { Create } = useContext(NotesContext);
 
   return (
     <IconButton

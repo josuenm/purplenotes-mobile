@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext } from "react";
-import { UserContext, UserContextProps } from "../contexts/userContext";
+import { UserContext } from "../contexts/userContext";
 import AboutApp from "../screens/AboutApp";
 import Dashboard from "../screens/Dashboard";
 import EditNote from "../screens/EditNote";
@@ -12,7 +12,7 @@ import UserInformation from "../screens/UserInformation";
 const { Navigator, Screen } = createNativeStackNavigator();
 
 export default function AppNavigation() {
-  const { user } = useContext(UserContext) as UserContextProps;
+  const { user } = useContext(UserContext);
 
   return (
     <Navigator

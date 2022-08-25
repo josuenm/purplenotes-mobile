@@ -5,7 +5,7 @@ import { Keyboard } from "react-native";
 import { NormalButton, OutlineButton } from "../components/Buttons";
 import { Input } from "../components/Input";
 import ScreenContainer from "../components/ScreenContainer";
-import { UserContext, UserContextProps } from "../contexts/userContext";
+import { UserContext } from "../contexts/userContext";
 
 interface RegisterProps {
   navigation: {
@@ -23,7 +23,7 @@ interface IFormInputs {
 export default function Register({ navigation }: RegisterProps) {
   const logo = require("../../assets/logo.png");
 
-  const { Register } = useContext(UserContext) as UserContextProps;
+  const { Register } = useContext(UserContext);
 
   const {
     control,

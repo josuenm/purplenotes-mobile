@@ -19,7 +19,7 @@ interface ContextProviderProps {
   children: React.ReactNode;
 }
 
-export interface UserContextProps {
+interface UserContextProps {
   Login: (data: LoginProps) => Promise<void>;
   Register: (data: {
     name: string;
@@ -33,7 +33,7 @@ export interface UserContextProps {
   user: null | UserProps;
 }
 
-export const UserContext = createContext<UserContextProps | null>(null);
+export const UserContext = createContext({} as UserContextProps);
 
 export const UserContextProvider = ({ children }: ContextProviderProps) => {
   const { handleError, handleLoading, handleSuccessful } = useContext(

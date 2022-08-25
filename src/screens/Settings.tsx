@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { TouchableOpacity } from "react-native";
 import HeaderWithBackButton from "../components/HeaderWithBackButton";
 import ScreenContainer from "../components/ScreenContainer";
-import { UserContext, UserContextProps } from "../contexts/userContext";
+import { UserContext } from "../contexts/userContext";
 import * as RootNavigation from "../utils/RootNavigation";
 
 interface FlatListData {
@@ -24,7 +24,7 @@ export default function Settings() {
     },
   ];
 
-  const { Exit } = useContext(UserContext) as UserContextProps;
+  const { Exit } = useContext(UserContext);
 
   function Navigate(route: string) {
     RootNavigation.navigate(route);

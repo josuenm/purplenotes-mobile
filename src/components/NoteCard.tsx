@@ -1,11 +1,11 @@
 import { Box, Button, Heading, Text, VStack } from "native-base";
 import { useContext } from "react";
-import { NotesContext, NotesContextProps } from "../contexts/notesContext";
+import { NotesContext } from "../contexts/notesContext";
 import { NoteProps } from "../types/NoteProps";
 import * as RootNavigation from "../utils/RootNavigation";
 
 export default function NoteCard({ note }: { note: NoteProps }) {
-  const { Delete } = useContext(NotesContext) as NotesContextProps;
+  const { Delete } = useContext(NotesContext);
 
   const formatedTitle = (title: string) => {
     if (title.length >= 20) {

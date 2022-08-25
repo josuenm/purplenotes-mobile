@@ -2,7 +2,7 @@ import { useToast } from "native-base";
 import { createContext, useState } from "react";
 import { SpinnerLoading } from "../components/LoadingScreen";
 
-export interface GlobalToolsContextProps {
+interface GlobalToolsContextProps {
   handleLoading: (value: boolean) => void;
   handleError: (title: string) => void;
   handleSuccessful: (title: string) => void;
@@ -12,9 +12,7 @@ interface ProviderProps {
   children: React.ReactNode;
 }
 
-export const GlobalToolsContext = createContext<GlobalToolsContextProps | null>(
-  null
-);
+export const GlobalToolsContext = createContext({} as GlobalToolsContextProps);
 
 export const GlobalToolsContextProvider = ({ children }: ProviderProps) => {
   const [isLoading, setIsLoading] = useState(false);
