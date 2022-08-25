@@ -1,10 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import notesApi from "../services/notesApi";
 import { NoteProps } from "../types/NoteProps";
-import {
-  GlobalToolsContext,
-  GlobalToolsContextProps,
-} from "./globalToolsContext";
+import { GlobalToolsContext } from "./globalToolsContext";
 import { UserContext } from "./userContext";
 
 interface ProviderProps {
@@ -12,11 +9,11 @@ interface ProviderProps {
 }
 
 interface NotesContextProps {
-  List: () => void;
-  Create: () => void;
-  Delete: (id: string) => void;
+  List: () => Promise<void>;
+  Create: () => Promise<void>;
+  Delete: (id: string) => Promise<void>;
   FindById: (id: string) => NoteProps | undefined;
-  Update: (id: string, data: string) => void;
+  Update: (id: string, data: string) => Promise<void>;
   notes: NoteProps[];
 }
 
@@ -24,9 +21,7 @@ export const NotesContext = createContext({} as NotesContextProps);
 
 export const NotesContextProvider = ({ children }: ProviderProps) => {
   const { Exit } = useContext(UserContext);
-  const { handleError, handleSuccessful } = useContext(
-    GlobalToolsContext
-  ) as GlobalToolsContextProps;
+  const { handleError, handleSuccessful } = useContext(GlobalToolsContext);
 
   const [notes, setNotes] = useState<NoteProps[] | []>([]);
 
@@ -61,7 +56,7 @@ export const NotesContextProvider = ({ children }: ProviderProps) => {
 
     switch (response.status) {
       case 201:
-        List();
+        setNotes((prev) => [...prev, response.data]);
         break;
 
       case 401:
@@ -80,7 +75,7 @@ export const NotesContextProvider = ({ children }: ProviderProps) => {
     switch (response.status) {
       case 204:
         handleSuccessful("Successfully deleted");
-        List();
+        setNotes((prev) => notes.filter((note) => note._id !== id));
         break;
 
       case 401:
@@ -97,6 +92,9 @@ export const NotesContextProvider = ({ children }: ProviderProps) => {
     const response = await notesApi.update(id, data);
 
     switch (response.status) {
+      case 200:
+        break;
+
       case 401:
         Exit();
         break;
