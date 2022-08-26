@@ -1,4 +1,4 @@
-import { Box, KeyboardAvoidingView, ScrollView } from "native-base";
+import { Box, KeyboardAvoidingView, ScrollView, Text } from "native-base";
 import { createRef, useContext, useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 import {
@@ -67,7 +67,9 @@ export default function EditNote({ route }: { route: RouteParams }) {
           selectedIconTint="#7c3aed"
           iconTint="#000"
           actions={[
-            actions.keyboard,
+            actions.normal,
+            actions.heading1,
+            actions.heading2,
             actions.setBold,
             actions.setItalic,
             actions.setUnderline,
@@ -77,9 +79,27 @@ export default function EditNote({ route }: { route: RouteParams }) {
             actions.undo,
             actions.redo,
           ]}
+          iconMap={{
+            [actions.heading1]: () => (
+              <Text color="black" fontWeight={600}>
+                H1
+              </Text>
+            ),
+            [actions.heading2]: () => (
+              <Text color="black" fontWeight={600}>
+                H2
+              </Text>
+            ),
+            [actions.normal]: () => (
+              <Text color="black" fontWeight={600}>
+                P
+              </Text>
+            ),
+          }}
           style={{
             width: "100%",
             alignSelf: "center",
+            flexWrap: "wrap",
           }}
         />
       </Box>
