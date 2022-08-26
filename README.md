@@ -1,4 +1,4 @@
-# Purple Notes - front-end - Version 1.0
+# Purple Notes - mobile - Version 1.0
 
 This is a note application focused on accessing from anywhere and whenever you want.
 
