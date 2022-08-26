@@ -1,10 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { LoginProps, RegisterProps, UserProps } from "../types/UserProps";
-import Keys from "../utils/KeysFile";
 
 const api = axios.create({
-  baseURL: `${Keys.API_URL}/users`,
+  baseURL: "https://purplenotes-api.herokuapp.com/users",
 });
 
 const getToken = async () => {
