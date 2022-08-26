@@ -1,8 +1,9 @@
 import { Box, Button, Heading, Text, VStack } from "native-base";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { NotesContext } from "../contexts/notesContext";
 import { NoteProps } from "../types/NoteProps";
 import * as RootNavigation from "../utils/RootNavigation";
+import { DeleteAlert } from "./DeleteAlert";
 
 export default function NoteCard({ note }: { note: NoteProps }) {
   const { Delete } = useContext(NotesContext);
@@ -29,6 +30,8 @@ export default function NoteCard({ note }: { note: NoteProps }) {
     });
   }
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <Box borderWidth={1} borderColor="gray.500" p={5} borderRadius="lg">
       <Heading>{formatedTitle(note.title)}</Heading>
@@ -40,11 +43,19 @@ export default function NoteCard({ note }: { note: NoteProps }) {
             Access
           </Text>
         </Button>
-        <Button colorScheme="red" onPress={() => Delete(note._id)}>
-          <Text color="white" fontWeight={500}>
-            Delete
-          </Text>
-        </Button>
+        <DeleteAlert
+          title="Delete Note"
+          description="Are you sure? You can't undo this action afterwards."
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          next={() => Delete(note._id)}
+        >
+          <Button colorScheme="red" onPress={() => setIsOpen(true)} w="full">
+            <Text color="white" fontWeight={500}>
+              Delete
+            </Text>
+          </Button>
+        </DeleteAlert>
       </VStack>
     </Box>
   );
