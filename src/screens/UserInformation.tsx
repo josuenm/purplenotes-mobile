@@ -7,10 +7,11 @@ import {
   Text,
   VStack,
 } from "native-base";
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Keyboard } from "react-native";
 import { NormalButton } from "../components/Buttons";
+import { DeleteAlert } from "../components/DeleteAlert";
 import HeaderWithBackButton from "../components/HeaderWithBackButton";
 import { UserContext } from "../contexts/userContext";
 
@@ -193,12 +194,22 @@ function EditPassword() {
 function DeleteButton() {
   const { Delete } = useContext(UserContext);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Button colorScheme="red" py={3} onPress={Delete}>
-      <Text fontWeight={500} color="white">
-        Delete Account
-      </Text>
-    </Button>
+    <DeleteAlert
+      title="Delete Account"
+      description="Are you sure? You can't undo this action afterwards."
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      next={Delete}
+    >
+      <Button colorScheme="red" py={3} onPress={() => setIsOpen(true)}>
+        <Text fontWeight={500} color="white">
+          Delete Account
+        </Text>
+      </Button>
+    </DeleteAlert>
   );
 }
 
