@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://purplenotes-api.herokuapp.com/notes",
+  baseURL: "https://purplenotes-api-production.up.railway.app/notes",
 });
 
 const getToken = async () => {

@@ -3,7 +3,7 @@ import axios from "axios";
 import { LoginProps, RegisterProps, UserProps } from "../types/UserProps";
 
 const api = axios.create({
-  baseURL: "https://purplenotes-api.herokuapp.com/users",
+  baseURL: "https://purplenotes-api-production.up.railway.app/users",
 });
 
 const getToken = async () => {
